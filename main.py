@@ -1,16 +1,18 @@
-import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+import csv
 
+page = requests.get("http://quotes.toscrape.com/tag/humor/")
+soup = BeautifulSoup(page.text, "html.parser")
+quotes = soup.findAll("span", attrs={"class":"text"})
+authors = soup.findAll("small", attrs={"class":"author"})
 
-def get_crypto_table():
-    url = "https://finance.yahoo.com/crypto/"
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    table = soup.find_all('table')[0]
-    df = pd.read_html(str(table))[0]
-    return df
+quotes_csv = open("quotes.csv", "w")
+writer = csv.writer(quotes_csv)
 
+writer.writerow(["Quote", "Author"])
 
-crypto_df = get_crypto_table()
-print(crypto_df)
+for quote, author in zip(quotes,authors):
+    print(f"{quote.text} - {author.text}")
+    writer.writerow([quote.text, author.text])
+quotes_csv.close()
