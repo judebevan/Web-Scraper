@@ -21,23 +21,5 @@
     <div id="footer">
         <footer>Thanks to Krish Naik www.youtube.com</footer>
     </div>
-# how to rename a branch
-bash
-git checkout master
-git pull origin master
-git push origin master
-git branch -m old_branch new_branch
-git push --set-upstream origin new_branch
-git remote set-branches origin '+*:refs/remotes/origin/*'
-git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-git fetch origin +new_branch:new_branch
-git merge new_branch
-git push origin HEAD:master
-git reset --hard origin/HEAD
-git log --oneline
-git reflog
-git tag v2.5.7 69e2c1d
-git show v2.5.7
-
 </body>
 </html>
